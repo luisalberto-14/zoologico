@@ -1,0 +1,601 @@
+/*========== Google fonts ==========*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/*========== Main CSS ==========*/
+/* nota hay una parte donde me tarde mucho y fue en z-index del contenido donde esta el boton del video, slide-text-content ahi aumente el z-index para poder dar click al boton en javascript*/
+:root{
+  /*======= Main colors =======*/
+  --first-color:#fff ;
+  --second-color: #5d9afc;
+  --third-color: #000;
+
+  /*======= Other colors =======*/
+  --body-bg-color: #161f33;
+  --hover-red-color: #fe5578;
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+html{
+    font-size: 62.5%;
+}
+*,*::before,*::after{
+    box-sizing: inherit;
+}
+body{
+     position:relative;
+    font-size: 16px;
+    background-color: var(--body-bg-color);
+    min-height: 100vh;
+}
+
+.main-section{
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-section .logo{
+  position:absolute;
+  z-index: 999;
+  top:50px;
+  left: 100px;
+  color:var(--first-color);
+  font-size: 1.8rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+
+/*========== Slider CSS ==========*/
+.slider{
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.slider .slide{
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  /* opacity: 0; */
+}
+
+/* .slider .slide.active{
+  opacity: 1;
+} */
+
+/*========== Slide images ==========*/
+.slide .slide-images{
+  position:relative;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+.slide.active:before{
+  content: "";
+  z-index: 777;
+  position:absolute;
+  bottom:0;
+  left: 0;
+  width: 100%;
+  height: 450px;
+  background: linear-gradient(to top,rgba(0,0,0,1),transparent);
+}
+
+
+.slide .slide-bg-img{
+  position:absolute;
+  top:0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  background-position: center center;
+  background-size: cover;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0;
+  transition:opacity 1s ease
+}
+
+.slide.active .slide-bg-img{
+  opacity: 1;
+  transition: opacity 1.5s ease;
+  animation: bg-animal 15s linear infinite;
+}
+
+.slide .slide-animal-img{
+  position:absolute;
+  top:0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  object-fit: contain;
+  background-position: center;
+  background-size: cover;
+  pointer-events: none;
+  user-select: none;
+  transform: scale(1) translateY(75px);
+  opacity: 0;
+  transition: 0;
+}
+
+.slide.active .slide-animal-img{
+  opacity:1;
+  transition:2s;
+  transition-property: opacity;
+  transition-delay:.2s;
+  transition-timing-function: cubic-bezier(.7,.1);
+}
+
+.slide .animal-name{
+  position:absolute;
+  top:150px;
+  color: var(--first-color);
+  font-weight: 600;
+  font-size: 7.5vw;
+  text-align: center;
+  letter-spacing: .3rem; 
+  white-space: nowrap; /*los espacios en blanco son reducidos y va todo en una linea*/
+  box-shadow: 0 5px 25px rgba(0, 0, 0, .5);
+  opacity: 0;
+}
+
+.slide.active .animal-name{
+  opacity:.8;
+  transform: scale(1.25);
+  transition:.9s ease, .7s ease;
+  transition-property: transform, opacity;
+  transition-delay: .5s ;
+}
+@keyframes bg-animal{
+  0%{
+    transform: scale(1);
+  }
+  50%{
+    transform: scale(1.25);
+  }
+  100%{
+    transform: scale(1);
+  }
+}
+
+
+/* .slide.active .animal-name{
+  opacity:.8;
+  transform: scale(1.25);
+  transition:.9s ease, .7s ease;
+  transition-property: transform, opacity;
+  transition-delay: .5s ;
+}
+
+
+
+.slide.active .slide-animal-img{
+  opacity:1;
+  transition:2s;
+  transition-property: opacity;
+  transition-delay:.2s;
+  transition-timing-function: cubic-bezier(.7,.1);
+}*/
+/*========== Slide text contents ==========*/
+.slide .slide-text-content{
+  position: absolute;
+  z-index:777;
+  top:0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transition: .3s ease;
+}
+
+.slide.active .slide-text-content{
+  z-index:888; /* se le sube el z-index para que asi puedas dar click en los botones*/
+}
+
+.slide .slide-caption{
+  position:absolute;
+  top:115px;
+  color:rgba(255, 255, 255, .7);
+  font-size: 1.5rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, .3);
+  transform: scale(.8);
+ opacity: 0;
+}
+
+.slide.active .slide-caption{
+  transform: scale(1);
+  opacity: 1;
+  transition: .5s,1s;
+  transition-property: transform, opacity;
+  transition-delay: .4s;
+  transition-timing-function: cubic-bezier(.7,.1);
+
+}
+
+.slide .slide-paragraph{
+  position: absolute;
+  bottom: 160px;
+  max-width: 550px;
+  color:rgba(255, 255, 255, .7);
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 32px;
+  text-align: center;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, .3);
+  transform: scale(.8);
+  opacity: 0;
+  transition:1s, .8s;
+  transition-delay: .5s;
+  transition-property: transform, opacity;
+}
+
+.slide.active .slide-paragraph{
+  transform: scale(1);
+  opacity: 1;
+}
+
+.slide-paragraph .read-more{
+  color: rgba(255, 255, 255, .7);
+  font-size: 1.6rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color .3s ease;
+}
+.slide-paragraph .read-more:hover{
+  color:var(--second-color);
+}
+
+.slide .watch-video-btn{
+  position: absolute;
+  bottom:70px;
+  background: none;
+  border:1px solid var(--first-color);
+  color:var(--first-color);
+  font-size: 1.8rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  width: 195px;
+  height: 45px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: .3s ease;
+}
+
+
+.slide .watch-video-btn:hover{
+  background:var(--first-color);
+  color:var(--third-color);
+  font-weight: 400;
+  font-size: 1.9rem;
+}
+
+
+/*========== Social media links ==========*/
+.slider-media-links{
+  z-index: 888;
+  position: absolute;
+  left:150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 35px;
+  font-size: 3rem;
+
+}
+
+.slider-media-links .media-links{
+  color: var(--first-color);
+  text-decoration: none;
+  opacity: .9;
+  transition: .3s ease;
+}
+
+.slider-media-links .media-links:hover{
+  color: var(--second-color);
+}
+
+/*========== Slider left/right arrow navigation ==========*/
+ .slider-arrows-navigation{
+  z-index: 888;
+  position: absolute;
+  bottom:65px;
+  right: 100px;
+  display: flex;
+  gap:75px;
+}
+
+.slider-arrows-navigation div{
+  color: var(--first-color);
+  cursor: pointer;
+  transition: .3s ease;
+  user-select: none;
+  font-size: 1.9rem;
+  font-weight: 400;
+}
+
+.slider-arrows-navigation div:hover{
+  color: var(--second-color);
+}
+
+/*========== Slider pagination buttons ==========*/
+ .slide-pagination{
+  z-index:888;
+  position:absolute;
+  right: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: .8rem;
+} 
+
+.slide-pagination .slide-btn{
+  width: .9rem;
+  height: 2.5rem;
+  border: 1px solid var(--first-color);
+  background-color: rgba(255, 255, 255, .5);
+  box-shadow: 0 5px 25px rgba(0, 0, 0, .5);
+  cursor: pointer;
+  transition: .3s ease;
+}
+
+.slide-pagination .slide-btn.active{
+  background-color: var(--second-color);
+}
+
+.slide-pagination .slide-btn:hover{
+  background-color: var(--second-color);
+}
+/*========== Slides visibility indicator bars ==========*/
+.slide-indicator-bars{
+  z-index: 888;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+}
+
+   /*  bar en la parte de abajo del body en las imagenes*/
+.slide-indicator-bars .indicator-bar{
+  position:absolute;
+  bottom: 0;
+  width: 0%;
+  height: 2px;
+  background-color: var(--second-color);
+}
+/*esta es la barra de abajo para indicar el autoslider asi en esos segundos corre y se pone en el setInterval*/
+.slide-indicator-bars .indicator-bar.active{
+  width: 100%;
+  transition:width 8.2s linear;
+}
+
+/*========== Slide video modal ==========*/
+ .slide-video-modal{
+  position: absolute;
+  z-index: 0;
+  top:0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, .5);
+  backdrop-filter: blur(5px);
+  opacity:0;
+  transition:.4s ease;
+}
+
+.slide-video-modal.active{
+  opacity:1;
+  z-index: 999;
+}
+
+.modal-video-content{
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slide-video-modal .video-close-btn{
+  position: absolute;
+  z-index: 777;
+  color: var(--first-color);
+  font-size: 5rem;
+  top:3.5rem;
+  right: 3.5rem;
+  cursor: pointer;
+  transition: color .3s ease;
+}
+
+.slide-video-modal .video-close-btn:hover{
+  color: var(--second-color);
+}
+
+.slide-video-modal .video-card{
+  position: relative;
+  background-color: var(--first-color);
+  max-width: 80rem;
+  display: flex;
+  flex-direction: column;
+  margin:5rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, .5);
+  overflow: hidden;
+}
+
+.video-card .video-paragraph{
+  color:var(--third-color);
+  font-size: 2rem;
+  font-weight: 400;
+  max-width: 80rem;
+  margin:2rem 2.5rem;
+}
+
+.video-card .read-more{
+  color:var(--third-color);
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 2rem;
+  white-space: nowrap;
+  transition: color .3s ease;
+} 
+
+.video-card .read-more:hover{
+  color: var(--second-color);
+}
+
+
+.slide-video-modal.active{
+  opacity:1;
+  z-index:999;
+}
+
+.slide-video-modal .video-close-btn:hover{
+  color: var(--second-color);
+}
+
+.slide-video-modal.active .video-card{
+  position: relative;
+  background-color: var(--first-color);
+  max-width: 80rem;
+  display: flex;
+  flex-direction: column;
+  margin:5rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, .5);
+  overflow: hidden;
+}
+main{
+  margin: 2rem 10rem;
+}
+main h1, p{
+  color: white;
+}
+
+main h1{
+  text-align: center;
+  margin:2rem;
+  letter-spacing: 1px;
+}
+
+/* main{
+  z-index: 100;
+} */
+
+/*========== Media queries (max-width: 990px) ==========*/
+@media screen and (max-width: 990px){
+  .slide .animal-name{
+    font-size: 9.5vw;
+  }
+  .slide .slide-animal-img{
+    transform:scale(1.25) translateY(50px);
+  }
+  .slide .slide-paragraph{
+    bottom:180px;
+    margin:0 100px;
+  }
+  .slide .watch-video-btn{
+    bottom:105px;
+  }
+  .slider-navigation{
+    bottom:30px;
+    gap:60px;
+  }
+}
+
+/*========== Media queries (max-width: 850px) ==========*/
+@media screen and (max-width: 850px){
+  .main-section .logo{
+    top:30px;
+    left: 50px;
+  }
+  .slider-media-links{
+    left: 50px;
+  }
+  .slider-arrows-navigation{
+    right: 300px;
+    color:blue;
+  }
+}
+
+/*========== Media queries (max-width: 580px) ==========*/
+@media screen and (max-width: 580px){
+  .main-section .logo{
+    left: 2.5rem;
+    font-size: 1.6em;
+  }
+  .slide .animal-name{
+    font-size: 12vw;
+  }
+  .slide-animal-img{
+    transform: scale(1.5) translateY(2.5rem);
+  }
+  .slide .slide-caption{
+    font-size: 1.1em;
+  }
+  .slide .slide-paragraph{
+    display:none;
+  }
+  .slide .watch-video-btn{
+    bottom:135px;
+  }
+  .slide-video-modal .video-card{
+    margin:25px;
+  }
+  .video-card .video-paragraph{
+    font-size: .9em;
+    margin:15px 20px;
+  }
+  .slider-media-links{
+    left: 22px;
+    font-size: 2.5rem;
+  }
+  .slide-pagination{
+    right: 15px;
+  }
+  .slider-arrows-navigation{
+    left: 30rem;
+    bottom:4rem;
+  }
+}
+
+/*========== Media queries (max-width: 400px) ==========*/
+@media screen and (max-width: 400px){
+  .slider-arrows-navigation{
+   display:flex;
+   left: 11rem;
+   bottom:6rem;
+  }
+}
+
+@media screen and (max-width: 360px){
+  .slider-arrows-navigation{
+   left: 8.5rem;
+   bottom:6rem;
+  }
+}
+      
